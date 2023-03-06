@@ -21,4 +21,17 @@ public class Bikes {
 
     private String bavailable;
 
+    public Bikes() {
+
+    }
+
+    public Bikes(String bikeid, Integer yearpurchased, String color, String bsize, String bstyle, String bavailable) {
+        this.bikeid = bikeid;
+        this.yearpurchased = yearpurchased;
+        this.color = color;
+        this.bsize = bsize;
+        this.bstyle = bstyle;
+        this.bavailable = bavailable;
+    }
+
 }
