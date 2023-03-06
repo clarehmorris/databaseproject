@@ -88,14 +88,14 @@ public class BikeController {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    Bikes newBike = new Bikes();
-
-    newBike.setBikeid(bikeid);
-    newBike.setYearpurchased(yearpurchased);
-    newBike.setColor(color);
-    newBike.setBsize(bsize);
-    newBike.setBstyle(bstyle);
-    newBike.setBavailable(bavailable);
+    Bikes newBike = Bikes.builder()
+                        .bikeid(bikeid)
+                        .yearpurchased(yearpurchased)
+                        .color(color)
+                        .bsize(bsize)
+                        .bstyle(bstyle)
+                        .bavailable(bavailable)
+                        .build();
 
     bikesRepo.save(newBike);
 
