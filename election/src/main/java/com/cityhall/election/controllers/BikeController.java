@@ -1,4 +1,4 @@
-package com.cityhall.election;
+package com.cityhall.election.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
