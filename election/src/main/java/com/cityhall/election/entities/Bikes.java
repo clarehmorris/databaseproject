@@ -1,9 +1,11 @@
 package com.cityhall.election.entities;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @Entity
 @Table(name = "BIKES")
 public class Bikes {
@@ -21,9 +23,7 @@ public class Bikes {
 
     private String bavailable;
 
-    public Bikes() {
-
-    }
+    public Bikes() {}
 
     public Bikes(String bikeid, Integer yearpurchased, String color, String bsize, String bstyle, String bavailable) {
         this.bikeid = bikeid;
