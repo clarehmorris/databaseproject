@@ -1,5 +1,7 @@
 package com.cityhall.election.entities;
 
+import com.cityhall.election.entities.idClasses.CandidateId;
+
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +9,7 @@ import lombok.Data;
 @Data
 @Builder
 @Entity
+@IdClass(CandidateId.class)
 @Table(name = "CANDIDATES")
 public class Candidate {
     

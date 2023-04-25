@@ -15,12 +15,12 @@ public class Election {
     @Id
     private Integer election_id;
 
-    private Date date;
+    private Date election_date;
 
     public Election() {}
 
-    public Election(Integer election_id, Date date) {
+    public Election(Integer election_id, Date election_date) {
         this.election_id = election_id;
-        this.date = date;
+        this.election_date = election_date;
     }
 }

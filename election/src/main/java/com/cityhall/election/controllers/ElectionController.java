@@ -46,7 +46,7 @@ public class ElectionController {
   //Updates a Election entity
   public ResponseEntity<Election> updateElectionBasedOnId(
                                         @PathVariable(value = "election_id") Integer election_id,
-                                        @RequestParam(required = false) Date date
+                                        @RequestParam(required = false) Date election_date
                                       ) {
     
     Election election = repo.findById(election_id).orElse(null);
@@ -54,8 +54,8 @@ public class ElectionController {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    if (date != null) {
-      election.setDate(date);
+    if (election_date != null) {
+      election.setElection_date(election_date);
     }
 
     repo.save(election);
@@ -68,7 +68,7 @@ public class ElectionController {
   //creates a Election entity
   public ResponseEntity<Election> createElection(
                                         @PathVariable(value = "election_id") Integer election_id,
-                                        @RequestParam(required = true) Date date
+                                        @RequestParam(required = true) Date election_date
                                     ) {
                             
     if (repo.findById(election_id).orElse(null) != null) {
@@ -77,7 +77,7 @@ public class ElectionController {
 
     Election newElection = Election.builder()
                         .election_id(election_id)
-                        .date(date)
+                        .election_date(election_date)
                         .build();
 
     repo.save(newElection);

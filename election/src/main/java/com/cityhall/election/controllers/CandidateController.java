@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 import com.cityhall.election.entities.Candidate;
+import com.cityhall.election.entities.idClasses.CandidateId;
 import com.cityhall.election.repositories.CandidateRepository;
 
 @RestController
@@ -29,26 +30,39 @@ public class CandidateController {
 
   }
 
-  @GetMapping("/candidate/{candidate_id}")
-  //Returns spcecific entity in the Candidate Table based on candidate_id
+  @GetMapping("/candidate/{candidate_id}/election/{election_id}")
+  //Returns spcecific entity in the Candidate Table based on candidate_id & election_id
   public ResponseEntity<Candidate> getCandidateBasedOnId(
-                                        @PathVariable(value = "candidate_id") Integer candidate_id
+                                        @PathVariable(value = "candidate_id") Integer candidate_id,
+                                        @PathVariable(value = "election_id") Integer election_id
                                       ) {
-    if (repo.findById(candidate_id).orElse(null) == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    return new ResponseEntity<>(repo.findById(candidate_id).orElse(null), HttpStatus.OK);
+    
+    CandidateId candidateId = CandidateId.builder()
+      .election_id(election_id)
+      .candidate_id(candidate_id)
+      .build();
+
+    if (repo.findById(candidateId).orElse(null) == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    return new ResponseEntity<>(repo.findById(candidateId).orElse(null), HttpStatus.OK);
 
   }
 
-  @PutMapping("/candidate/{candidate_id}")
+  @PutMapping("/candidate/{candidate_id}/election/{election_id}")
   //Updates a Candidate entity
-  public ResponseEntity<Candidate> updateCandidateBasedOnId(
+  public ResponseEntity<Candidate> updateCandidateBasedOnCandidateIdAndElectionId(
                                         @PathVariable(value = "candidate_id") Integer candidate_id,
-                                        @RequestParam(required = false) Integer election_id,
+                                        @PathVariable(value = "candidate_id")  Integer election_id,
                                         @RequestParam(required = false) String ssn,
                                         @RequestParam(required = false) Integer office_id
                                       ) {
-    
-    Candidate candidate = repo.findById(candidate_id).orElse(null);
+    CandidateId candidateId = CandidateId.builder()
+      .election_id(election_id)
+      .candidate_id(candidate_id)
+      .build();
+
+    Candidate candidate = repo.findById(candidateId).orElse(null);
+
     if (candidate == null) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
@@ -69,35 +83,47 @@ public class CandidateController {
 
   }
 
-  @PostMapping("/candidate/")
+  @PostMapping("/candidate/{candidate_id}/election/{election_id}")
   //creates a candidate entity
   public ResponseEntity<Candidate> createCandidate(
                                         @PathVariable(value = "candidate_id") Integer candidate_id,
-                                        @RequestParam(required = true) Integer election_id,
+                                        @PathVariable(value = "election_id") Integer election_id,
                                         @RequestParam(required = true) String ssn,
                                         @RequestParam(required = true) Integer office_id
                                     ) {
-                            
-    if (repo.findById(candidate_id).orElse(null) != null) {
+
+    CandidateId candidateId = CandidateId.builder()
+      .election_id(election_id)
+      .candidate_id(candidate_id)
+      .build();
+                                                        
+    if (repo.findById(candidateId).orElse(null) != null) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     Candidate newCandidate = Candidate.builder()
-                        .candidate_id(candidate_id)
-                        .election_id(election_id)
-                        .ssn(ssn)
-                        .office_id(office_id)
-                        .build();
+      .candidate_id(candidate_id)
+      .election_id(election_id)
+      .ssn(ssn)
+      .office_id(office_id)
+      .build();
 
     repo.save(newCandidate);
 
     return new ResponseEntity<>(newCandidate, HttpStatus.OK);
   }
 
-  @DeleteMapping("/candidate/{candidate_id}")
+  @DeleteMapping("/candidate/{candidate_id}/election/{election_id}")
   //deletes a candidate entity
-  public ResponseEntity<String> deleteCandidate(@PathVariable(value = "candidate_id") Integer candidate_id) {
-    Candidate candidate = repo.findById(candidate_id).orElse(null);
+  public ResponseEntity<String> deleteCandidate(
+                                        @PathVariable(value = "candidate_id") Integer candidate_id,
+                                        @PathVariable(value = "election_id") Integer election_id
+                                      ) {
+    CandidateId candidateId = CandidateId.builder()
+      .election_id(election_id)
+      .candidate_id(candidate_id)
+      .build();
+    Candidate candidate = repo.findById(candidateId).orElse(null);
     repo.delete(candidate);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
