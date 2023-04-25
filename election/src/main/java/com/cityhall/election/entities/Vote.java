@@ -9,7 +9,7 @@ import lombok.Data;
 @Entity
 @Table(name = "VOTES")
 public class Vote {
-    
+
     private Integer candidate_id;
 
     private Integer poll_id;

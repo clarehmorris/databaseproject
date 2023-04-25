@@ -13,18 +13,27 @@ public class PollingLocation {
     @Id
     private Integer poll_id;
 
-    private String name;
+    private String poll_name;
 
-    private String address;
+    private String street;
+
+    private String city;
+
+    private String state;
+
+    private String zip;
 
     private Integer num_booths;
 
     public PollingLocation() {}
 
-    public PollingLocation(Integer poll_id, String name, String address, Integer num_booths) {
+    public PollingLocation(Integer poll_id, String poll_name, String street, String city, String state, String zip, Integer num_booths) {
         this.poll_id = poll_id;
-        this.name = name;
-        this.address = address;
+        this.poll_name = poll_name;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
         this.num_booths = num_booths;
     }
     
