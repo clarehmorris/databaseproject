@@ -103,6 +103,7 @@ CREATE TABLE VOTES (
     candidate_id INTEGER,
     poll_id INTEGER,
     election_id INTEGER,
+    vote_id INTEGER PRIMARY KEY,
     
     CONSTRAINT votes_candidate_fk
         FOREIGN KEY(candidate_id, election_id) REFERENCES CANDIDATES(candidate_id, election_id),
@@ -111,3 +112,5 @@ CREATE TABLE VOTES (
     CONSTRAINT votes_election_fk    
         FOREIGN KEY (election_id) REFERENCES ELECTION(election_id)
 );
+
+CREATE SEQUENCE vote_id START WITH 1;
