@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,12 +18,13 @@ import com.cityhall.election.entities.idClasses.CandidateId;
 import com.cityhall.election.repositories.CandidateRepository;
 
 @RestController
+@RequestMapping("candidate")
 public class CandidateController {
 
   @Autowired
   private CandidateRepository repo;
 
-  @GetMapping("/candidate/")
+  @GetMapping("/")
   //Returns all entities in the Candidate Table
   public ResponseEntity<List<Candidate>> getAllCandidates() {
 
@@ -30,7 +32,7 @@ public class CandidateController {
 
   }
 
-  @GetMapping("/candidate/{candidate_id}/election/{election_id}")
+  @GetMapping("/{candidate_id}/election/{election_id}")
   //Returns spcecific entity in the Candidate Table based on candidate_id & election_id
   public ResponseEntity<Candidate> getCandidateBasedOnId(
                                         @PathVariable(value = "candidate_id") Integer candidate_id,
@@ -48,7 +50,7 @@ public class CandidateController {
 
   }
 
-  @PutMapping("/candidate/{candidate_id}/election/{election_id}")
+  @PutMapping("/{candidate_id}/election/{election_id}")
   //Updates a Candidate entity
   public ResponseEntity<Candidate> updateCandidateBasedOnCandidateIdAndElectionId(
                                         @PathVariable(value = "candidate_id") Integer candidate_id,
@@ -83,7 +85,7 @@ public class CandidateController {
 
   }
 
-  @PostMapping("/candidate/{candidate_id}/election/{election_id}")
+  @PostMapping("/{candidate_id}/election/{election_id}")
   //creates a candidate entity
   public ResponseEntity<Candidate> createCandidate(
                                         @PathVariable(value = "candidate_id") Integer candidate_id,
@@ -113,7 +115,7 @@ public class CandidateController {
     return new ResponseEntity<>(newCandidate, HttpStatus.OK);
   }
 
-  @DeleteMapping("/candidate/{candidate_id}/election/{election_id}")
+  @DeleteMapping("/{candidate_id}/election/{election_id}")
   //deletes a candidate entity
   public ResponseEntity<String> deleteCandidate(
                                         @PathVariable(value = "candidate_id") Integer candidate_id,
