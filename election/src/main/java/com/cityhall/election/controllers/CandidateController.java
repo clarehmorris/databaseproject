@@ -52,7 +52,7 @@ public class CandidateController {
   //Updates a Candidate entity
   public ResponseEntity<Candidate> updateCandidateBasedOnCandidateIdAndElectionId(
                                         @PathVariable(value = "candidate_id") Integer candidate_id,
-                                        @PathVariable(value = "candidate_id")  Integer election_id,
+                                        @PathVariable(value = "election_id")  Integer election_id,
                                         @RequestParam(required = false) String ssn,
                                         @RequestParam(required = false) Integer office_id
                                       ) {
@@ -117,14 +117,15 @@ public class CandidateController {
   //deletes a candidate entity
   public ResponseEntity<String> deleteCandidate(
                                         @PathVariable(value = "candidate_id") Integer candidate_id,
-                                        @PathVariable(value = "election_id") Integer election_id
+                                        @PathVariable(value = "election_id")  Integer election_id
                                       ) {
     CandidateId candidateId = CandidateId.builder()
       .election_id(election_id)
       .candidate_id(candidate_id)
       .build();
-    Candidate candidate = repo.findById(candidateId).orElse(null);
-    repo.delete(candidate);
+
+    repo.deleteById(candidateId);
+
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 

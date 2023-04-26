@@ -64,7 +64,7 @@ public class ElectionController {
 
   }
 
-  @PostMapping("/election/")
+  @PostMapping("/election/{election_id}")
   //creates a Election entity
   public ResponseEntity<Election> createElection(
                                         @PathVariable(value = "election_id") Integer election_id,
@@ -88,9 +88,12 @@ public class ElectionController {
   @DeleteMapping("/election/{election_id}")
   //deletes a Election entity
   public ResponseEntity<String> deleteElection(@PathVariable(value = "election_id") Integer election_id) {
-    Election election = repo.findById(election_id).orElse(null);
-    repo.delete(election);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    try {
+      repo.deleteById(election_id);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch(Exception e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
 }
