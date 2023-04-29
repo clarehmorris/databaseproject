@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,12 +19,13 @@ import com.cityhall.election.entities.Voter;
 import com.cityhall.election.repositories.VoterRepository;
 
 @RestController
+@RequestMapping("voter")
 public class VoterController {
 
   @Autowired
   private VoterRepository repo;
 
-  @GetMapping("/voter/")
+  @GetMapping("/")
   //Returns all entities in the Voter Table
   public ResponseEntity<List<Voter>> getAllVoter() {
 
@@ -31,7 +33,7 @@ public class VoterController {
 
   }
 
-  @GetMapping("/voter/{ssn}")
+  @GetMapping("/{ssn}")
   //Returns spcecific entity in the Voter Table based on poll_id
   public ResponseEntity<Voter> getVoterBasedOnId(
                                         @PathVariable(value = "ssn") String ssn
@@ -42,7 +44,7 @@ public class VoterController {
 
   }
 
-  @PutMapping("/voter/{ssn}")
+  @PutMapping("/{ssn}")
   //Updates a Voter entity
   public ResponseEntity<Voter> updateVoterBasedOnId(
                                         @PathVariable(value = "ssn") String ssn,
@@ -105,7 +107,7 @@ public class VoterController {
 
   }
 
-  @PostMapping("/voter/{ssn}")
+  @PostMapping("/{ssn}")
   //creates a Voter entity
   public ResponseEntity<Voter> createPollingLocation(
                                         @PathVariable(value = "ssn") String ssn,
@@ -142,7 +144,7 @@ public class VoterController {
     return new ResponseEntity<>(newPollingLocation, HttpStatus.OK);
   }
 
-  @DeleteMapping("/voter/{ssn}")
+  @DeleteMapping("/{ssn}")
   //deletes a Voter entity
   public ResponseEntity<String> deletePollingLocation(@PathVariable(value = "ssn") String ssn) {
     try {

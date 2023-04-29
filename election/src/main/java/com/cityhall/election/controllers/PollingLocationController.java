@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,12 +18,13 @@ import com.cityhall.election.entities.PollingLocation;
 import com.cityhall.election.repositories.PollingLocationRepository;
 
 @RestController
+@RequestMapping("pollinglocation")
 public class PollingLocationController {
 
   @Autowired
   private PollingLocationRepository repo;
 
-  @GetMapping("/pollinglocation/")
+  @GetMapping("/")
   //Returns all entities in the PollingLocation Table
   public ResponseEntity<List<PollingLocation>> getAllPollingLocations() {
 
@@ -30,7 +32,7 @@ public class PollingLocationController {
 
   }
 
-  @GetMapping("/pollinglocation/{poll_id}")
+  @GetMapping("/{poll_id}")
   //Returns spcecific entity in the PollingLocation Table based on poll_id
   public ResponseEntity<PollingLocation> getPollingLocationBasedOnId(
                                         @PathVariable(value = "poll_id") Integer poll_id
@@ -41,7 +43,7 @@ public class PollingLocationController {
 
   }
 
-  @PutMapping("/pollinglocation/{poll_id}")
+  @PutMapping("/{poll_id}")
   //Updates a PollingLocation entity
   public ResponseEntity<PollingLocation> updatePollingLocationBasedOnId(
                                         @PathVariable(value = "poll_id") Integer poll_id,
@@ -89,7 +91,7 @@ public class PollingLocationController {
 
   }
 
-  @PostMapping("/pollinglocation/{poll_id}")
+  @PostMapping("/{poll_id}")
   //creates a PollingLocation entity
   public ResponseEntity<PollingLocation> createPollingLocation(
                                         @PathVariable(value = "poll_id") Integer poll_id,
@@ -120,7 +122,7 @@ public class PollingLocationController {
     return new ResponseEntity<>(newPollingLocation, HttpStatus.OK);
   }
 
-  @DeleteMapping("/pollinglocation/{poll_id}")
+  @DeleteMapping("/{poll_id}")
   //deletes a PollingLocation entity
   public ResponseEntity<String> deletePollingLocation(@PathVariable(value = "poll_id") Integer poll_id) {
     try {

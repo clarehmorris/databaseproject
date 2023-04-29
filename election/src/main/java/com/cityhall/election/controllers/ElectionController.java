@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,12 +19,13 @@ import com.cityhall.election.entities.Election;
 import com.cityhall.election.repositories.ElectionRepository;
 
 @RestController
+@RequestMapping("election")
 public class ElectionController {
 
   @Autowired
   private ElectionRepository repo;
 
-  @GetMapping("/election/")
+  @GetMapping("/")
   //Returns all entities in the Election Table
   public ResponseEntity<List<Election>> getAllElections() {
 
@@ -31,7 +33,7 @@ public class ElectionController {
 
   }
 
-  @GetMapping("/election/{election_id}")
+  @GetMapping("/{election_id}")
   //Returns spcecific entity in the Election Table based on election_id
   public ResponseEntity<Election> getElectionBasedOnId(
                                         @PathVariable(value = "election_id") Integer election_id
@@ -42,7 +44,7 @@ public class ElectionController {
 
   }
 
-  @PutMapping("/election/{election_id}")
+  @PutMapping("/{election_id}")
   //Updates a Election entity
   public ResponseEntity<Election> updateElectionBasedOnId(
                                         @PathVariable(value = "election_id") Integer election_id,
@@ -64,7 +66,7 @@ public class ElectionController {
 
   }
 
-  @PostMapping("/election/{election_id}")
+  @PostMapping("/{election_id}")
   //creates a Election entity
   public ResponseEntity<Election> createElection(
                                         @PathVariable(value = "election_id") Integer election_id,
@@ -85,7 +87,7 @@ public class ElectionController {
     return new ResponseEntity<>(newElection, HttpStatus.OK);
   }
 
-  @DeleteMapping("/election/{election_id}")
+  @DeleteMapping("/{election_id}")
   //deletes a Election entity
   public ResponseEntity<String> deleteElection(@PathVariable(value = "election_id") Integer election_id) {
     try {
