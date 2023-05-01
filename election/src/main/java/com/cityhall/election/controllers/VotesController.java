@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+
 import java.util.List;
 
 import com.cityhall.election.entities.Votes;
@@ -22,6 +28,12 @@ public class VotesController {
 
   @Autowired
   private VoteRepository repo;
+
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
+
+  private SimpleJdbcCall simpleJdbcCall;
+
 
   @GetMapping("/")
   //Returns all entities in the Votes Table
@@ -56,4 +68,14 @@ public class VotesController {
     return new ResponseEntity<>(newVote, HttpStatus.OK);
   }
 
+  @GetMapping("/candidate_id/{candidate_id}")
+  //Returns all entities in the Votes Table (procedure 1)
+  public ResponseEntity<Integer> getVoteCountForCandidate(
+                                                    @PathVariable(value = "candidate_id") Integer candidate_id
+                                                ) {
+    List<Votes> candidateVotes = repo.findByCandidate_id(candidate_id);
+                                          
+    return new ResponseEntity<>(candidateVotes.size(), HttpStatus.OK);
+
+  }
 }
