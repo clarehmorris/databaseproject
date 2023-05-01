@@ -37,7 +37,7 @@ public class VotesController {
 
   @GetMapping("/")
   //Returns all entities in the Votes Table
-  public ResponseEntity<List<Votes>> getAllPollingLocations() {
+  public ResponseEntity<List<Votes>> getAllVotes() {
 
     return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
 
