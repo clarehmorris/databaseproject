@@ -19,4 +19,13 @@ public class Votes {
     @Id
     private Integer vote_id;
 
+    public Votes() {}
+
+    public Votes(Integer candidate_id, Integer poll_id, Integer election_id, Integer vote_id) {
+        this.candidate_id = candidate_id;
+        this.poll_id = poll_id;
+        this.election_id = election_id;
+        this.vote_id = vote_id;
+    }
+
 }
