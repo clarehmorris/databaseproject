@@ -15,4 +15,11 @@ public class Office {
 
     private String office_name;
 
+    public Office() {}
+
+    public Office(Integer office_id, String office_name) {
+        this.office_id = office_id;
+        this.office_name = office_name;
+    }
+
 }
