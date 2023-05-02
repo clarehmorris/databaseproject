@@ -1,8 +1,8 @@
 -- This file contains the inserts/updates for the small city election ddl
 
-INSERT INTO ELECTION VALUES(1,TO_DATE('04132023','mmddyyyy'));
+INSERT INTO ELECTION VALUES(1,TO_DATE('04082021','mmddyyyy'));
 INSERT INTO ELECTION VALUES(2,TO_DATE('04142022','mmddyyyy'));
-INSERT INTO ELECTION VALUES(3,TO_DATE('04082021','mmddyyyy'));
+INSERT INTO ELECTION VALUES(3,TO_DATE('04132023','mmddyyyy'));
 
 INSERT INTO POLLING_LOCATION VALUES(11,'Newberry Commons','123 Newberry Street','Lock Village','TA',89455,40);
 INSERT INTO POLLING_LOCATION VALUES(12,'Frankenburg High','5067 Main Street','Ark Cove','TA',89658,200);
