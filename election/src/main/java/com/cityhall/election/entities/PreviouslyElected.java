@@ -14,7 +14,8 @@ import lombok.Data;
 public class PreviouslyElected {
 
     @Id
-    private Integer election_id;
+    @Column(name="election_id")
+    private Integer electionId;
 
     private Integer term_num;
 
@@ -24,12 +25,12 @@ public class PreviouslyElected {
     @Id
     private Integer office_id;
 
-    private Boolean currently_in_office;
+    private Character currently_in_office;
 
     public PreviouslyElected() {}
 
-    public PreviouslyElected(Integer election_id, Integer term_num, String ssn, Integer office_id, Boolean currently_in_office) {
-        this.election_id = election_id;
+    public PreviouslyElected(Integer electionId, Integer term_num, String ssn, Integer office_id, Character currently_in_office) {
+        this.electionId = electionId;
         this.term_num = term_num;
         this.ssn = ssn;
         this.office_id = office_id;

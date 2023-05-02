@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 public class PreviouslyElectedId implements Serializable {
     
-    private Integer election_id;
+    private Integer electionId;
 
     private String ssn;
 
@@ -16,8 +16,8 @@ public class PreviouslyElectedId implements Serializable {
 
     public PreviouslyElectedId() {}
 
-    public PreviouslyElectedId(Integer election_id, String ssn, Integer office_id) {
-        this.election_id = election_id;
+    public PreviouslyElectedId(Integer electionId, String ssn, Integer office_id) {
+        this.electionId = electionId;
         this.ssn = ssn;
         this.office_id = office_id;
     }
