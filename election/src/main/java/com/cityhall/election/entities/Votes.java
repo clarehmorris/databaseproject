@@ -10,7 +10,8 @@ import lombok.Data;
 @Table(name = "VOTES")
 public class Votes {
 
-    private Integer candidate_id;
+    @Column(name="candidate_id")
+    private Integer candidate;
 
     private Integer poll_id;
 
@@ -21,8 +22,8 @@ public class Votes {
 
     public Votes() {}
 
-    public Votes(Integer candidate_id, Integer poll_id, Integer election_id, Integer vote_id) {
-        this.candidate_id = candidate_id;
+    public Votes(Integer candidate, Integer poll_id, Integer election_id, Integer vote_id) {
+        this.candidate = candidate;
         this.poll_id = poll_id;
         this.election_id = election_id;
         this.vote_id = vote_id;

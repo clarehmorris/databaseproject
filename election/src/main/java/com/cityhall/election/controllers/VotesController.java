@@ -35,7 +35,7 @@ public class VotesController {
   //creates a Votes entity
   public ResponseEntity<Votes> createVote(
                                         @PathVariable(value = "vote_id") Integer vote_id,
-                                        @RequestParam(required = true) Integer candidate_id,
+                                        @RequestParam(required = true) Integer candidate,
                                         @RequestParam(required = true) Integer poll_id,
                                         @RequestParam(required = true) Integer election_id
                                     ) {
@@ -45,7 +45,7 @@ public class VotesController {
     }
 
     Votes newVote = Votes.builder()
-      .candidate_id(candidate_id)
+      .candidate(candidate)
       .poll_id(poll_id)
       .election_id(election_id)
       .vote_id(vote_id)
@@ -56,4 +56,16 @@ public class VotesController {
     return new ResponseEntity<>(newVote, HttpStatus.OK);
   }
 
+  @GetMapping("/candidate/{candidate}")
+  //Returns all entities in the Votes Table (procedure 1)
+  public ResponseEntity<String> getVoteCountForCandidate(
+                                                    @PathVariable(value = "candidate") Integer candidate
+                                                ) {
+    List<Votes> candidateVotes = repo.findByCandidate(candidate);
+
+    String response = "Number of votes: " + candidateVotes.size();
+                                          
+    return new ResponseEntity<>(response, HttpStatus.OK);
+
+  }
 }

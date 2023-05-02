@@ -17,6 +17,8 @@ import com.cityhall.election.entities.PreviouslyElected;
 import com.cityhall.election.entities.idClasses.PreviouslyElectedId;
 import com.cityhall.election.repositories.PreviouslyElectedRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("previously-elected")
 public class PreviouslyElectedController {
@@ -25,23 +27,23 @@ public class PreviouslyElectedController {
     private PreviouslyElectedRepository repo;
     
     @GetMapping("/")
-    //Returns all entities in the previously_elected Table
+    @Operation(description = "Returns all entities in the previously_elected Table")
     public ResponseEntity<List<PreviouslyElected>> getAllCandidates() {
 
-    return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
     
     }   
 
-    @GetMapping("/election/{election_id}/ssn/{ssn}/office_id/{office_id}")
-    //Returns spcecific entity in the previously_elected Table based on election_id, ssn, & office_id
+    @GetMapping("/election/{electionId}/ssn/{ssn}/office_id/{office_id}")
+    @Operation(description = "Returns spcecific entity in the previously_elected Table based on election_id, ssn, & office_id")
     public ResponseEntity<PreviouslyElected> getPreviouslyElectedBasedOnId(
-                                        @PathVariable(value = "election_id") Integer election_id,
+                                        @PathVariable(value = "electionId") Integer electionId,
                                         @PathVariable(value = "ssn") String ssn,
                                         @PathVariable(value = "office_id") Integer office_id
                                     ) {
       
         PreviouslyElectedId previouslyElectedId = PreviouslyElectedId.builder()
-            .election_id(election_id)
+            .electionId(electionId)
             .ssn(ssn)
             .office_id(office_id)
             .build();
@@ -52,17 +54,17 @@ public class PreviouslyElectedController {
 
     }
 
-    @PutMapping("/election/{election_id}/ssn/{ssn}/office_id/{office_id}")
-    //Updates a PreviouslyElected entity
+    @PutMapping("/election/{electionId}/ssn/{ssn}/office_id/{office_id}")
+    @Operation(description = "Updates a PreviouslyElected entity")
     public ResponseEntity<PreviouslyElected> updatePreviouslyElectedBasedOnId(
-                                        @PathVariable(value = "election_id")  Integer election_id,
+                                        @PathVariable(value = "electionId")  Integer electionId,
                                         @PathVariable(value = "ssn") String ssn,
                                         @PathVariable(value = "office_id") Integer office_id,
                                         @RequestParam(required = false) Integer term_num,
-                                        @RequestParam(required = false) Boolean currently_in_office
+                                        @RequestParam(required = false) Character currently_in_office
                                     ) {
         PreviouslyElectedId previouslyElectedId = PreviouslyElectedId.builder()
-            .election_id(election_id)
+            .electionId(electionId)
             .ssn(ssn)
             .office_id(office_id)
             .build();
@@ -86,18 +88,18 @@ public class PreviouslyElectedController {
 
     }
 
-    @PostMapping("/election/{election_id}/ssn/{ssn}/office_id/{office_id}")
-    //creates a PreviouslyElected entity
+    @PostMapping("/election/{electionId}/ssn/{ssn}/office_id/{office_id}")
+    @Operation(description = "creates a PreviouslyElected entity")
     public ResponseEntity<PreviouslyElected> createPreviouslyElected(
-                                        @PathVariable(value = "election_id")  Integer election_id,
+                                        @PathVariable(value = "electionId")  Integer electionId,
                                         @PathVariable(value = "ssn") String ssn,
                                         @PathVariable(value = "office_id") Integer office_id,
                                         @RequestParam(required = true) Integer term_num,
-                                        @RequestParam(required = true) Boolean currently_in_office
+                                        @RequestParam(required = true) Character currently_in_office
                                       ) {
 
         PreviouslyElectedId previouslyElectedId = PreviouslyElectedId.builder()
-            .election_id(election_id)
+            .electionId(electionId)
             .ssn(ssn)
             .office_id(office_id)
             .build();
@@ -107,7 +109,7 @@ public class PreviouslyElectedController {
         }
 
         PreviouslyElected newPreviouslyElected = PreviouslyElected.builder()
-            .election_id(election_id)
+            .electionId(electionId)
             .term_num(term_num)
             .ssn(ssn)
             .office_id(office_id)
@@ -119,16 +121,16 @@ public class PreviouslyElectedController {
         return new ResponseEntity<>(newPreviouslyElected, HttpStatus.OK);
     }
 
-    @DeleteMapping("/election/{election_id}/ssn/{ssn}/office_id/{office_id}")
-    //deletes a PreviouslyElected entity
+    @DeleteMapping("/election/{electionId}/ssn/{ssn}/office_id/{office_id}")
+    @Operation(description = "deletes a PreviouslyElected entity")
     public ResponseEntity<String> deleteCandidate(
-                                            @PathVariable(value = "election_id")  Integer election_id,
+                                            @PathVariable(value = "electionId")  Integer electionId,
                                             @PathVariable(value = "ssn") String ssn,
                                             @PathVariable(value = "office_id") Integer office_id
                                         ) {
 
         PreviouslyElectedId previouslyElectedId = PreviouslyElectedId.builder()
-            .election_id(election_id)
+            .electionId(electionId)
             .ssn(ssn)
             .office_id(office_id)
             .build();
@@ -142,5 +144,21 @@ public class PreviouslyElectedController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("/election/{electionId}/")
+    @Operation(description = "Updates currently_in_office elected to N. Procedure 2")
+    public ResponseEntity<PreviouslyElected> updatePreviouslyElectedBasedOnId(
+                                        @RequestParam(required = false) Integer electionId
+                                    ) {
+
+        List<PreviouslyElected> formerlyElected = repo.findByElectionId(electionId);
+
+        formerlyElected.forEach(official -> {
+            official.setCurrently_in_office('N');
+            repo.save(official);
+        });
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
 
 }
