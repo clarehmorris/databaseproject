@@ -39,7 +39,7 @@ public class VoterController {
                                         @PathVariable(value = "ssn") String ssn
                                       ) {
 
-    if (repo.findById(ssn).orElse(null) == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    if (repo.findById(ssn).orElse(null) == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     return new ResponseEntity<>(repo.findById(ssn).orElse(null), HttpStatus.OK);
 
   }

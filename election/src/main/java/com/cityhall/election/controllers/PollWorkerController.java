@@ -43,7 +43,7 @@ public class PollWorkerController {
             .ssn(ssn)
             .build();
 
-        if (repo.findById(pollWorkerId).orElse(null) == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (repo.findById(pollWorkerId).orElse(null) == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(repo.findById(pollWorkerId).orElse(null), HttpStatus.OK);
 

@@ -38,7 +38,7 @@ public class OfficeController {
                                         @PathVariable(value = "office_id") Integer office_id
                                       ) {
 
-    if (repo.findById(office_id).orElse(null) == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    if (repo.findById(office_id).orElse(null) == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     return new ResponseEntity<>(repo.findById(office_id).orElse(null), HttpStatus.OK);
 
   }

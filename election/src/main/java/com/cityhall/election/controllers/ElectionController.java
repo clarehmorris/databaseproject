@@ -39,7 +39,7 @@ public class ElectionController {
                                         @PathVariable(value = "election_id") Integer election_id
                                       ) {
 
-    if (repo.findById(election_id).orElse(null) == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    if (repo.findById(election_id).orElse(null) == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     return new ResponseEntity<>(repo.findById(election_id).orElse(null), HttpStatus.OK);
 
   }
