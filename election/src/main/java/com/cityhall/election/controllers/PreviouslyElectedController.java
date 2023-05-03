@@ -48,7 +48,7 @@ public class PreviouslyElectedController {
             .office_id(office_id)
             .build();
 
-        if (repo.findById(previouslyElectedId).orElse(null) == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (repo.findById(previouslyElectedId).orElse(null) == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(repo.findById(previouslyElectedId).orElse(null), HttpStatus.OK);
 

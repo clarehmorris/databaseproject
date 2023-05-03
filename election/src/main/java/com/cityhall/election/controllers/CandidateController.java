@@ -44,7 +44,7 @@ public class CandidateController {
         .candidate_id(candidate_id)
         .build();
 
-      if (repo.findById(candidateId).orElse(null) == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      if (repo.findById(candidateId).orElse(null) == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
       return new ResponseEntity<>(repo.findById(candidateId).orElse(null), HttpStatus.OK);
 
